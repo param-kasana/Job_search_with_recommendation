@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Job Listings</h2>
+{% if category == "all categories" %}
+    {% if keyword == '' %}
+        <p>{{ num_job }} jobs found in "{{ category }}"</p>
+    {% else %}
+        <p>{{ num_job }} jobs found related to "{{ keyword }}" in "{{ category }}"</p>
+    {% endif %}
+{% else %}
+    {% if keyword == "" %}
+        <p>{{ num_job }} jobs found in "{{ category }}"</p>
+    {% else %}
+        <p>{{ num_job }} jobs found related to "{{ keyword }}" in  "{{ category }}"</p>
+    {% endif %}
+{% endif %}
+<div class="job-cards">
+    {% for job in jobs %}
+    <div class="job-card">
+        <a href="{{ url_for('job_detail', job_id=job.Webindex) }}" class="job-card-link">
+            <h3 class="job-title">{{ job.Title }}</h3>
+            <p class="job-description">{{ job.Description[:100] }}...</p>
+            <p class="job-salary">Salary: {{ job.Salary }}</p>
+            <p class="job-post-date">Job Post Date: {{ job.Post_Date }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('search_jobs', page=page-1, keyword=keyword, category=category) }}">&laquo; Previous</a>
+    {% endif %}
+
+    {% set start_page = max(1, page - 2) %}
+    {% set end_page = min(total_pages, page + 2) %}
+
+    {% if start_page > 1 %}
+        <a href="{{ url_for('search_jobs', page=1, keyword=keyword, category=category) }}">1</a>
+        {% if start_page > 2 %}
+            <span>...</span>
+        {% endif %}
+    {% endif %}
+
+    {% for p in range(start_page, end_page + 1) %}
+        {% if p == page %}
+            <span class="current-page">{{ p }}</span>
+        {% else %}
+            <a href="{{ url_for('search_jobs', page=p, keyword=keyword, category=category) }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if end_page < total_pages %}
+        {% if end_page < total_pages - 1 %}
+            <span>...</span>
+        {% endif %}
+        <a href="{{ url_for('search_jobs', page=total_pages, keyword=keyword, category=category) }}">{{ total_pages }}</a>
+    {% endif %}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('search_jobs', page=page+1, keyword=keyword, category=category) }}">Next &raquo;</a>
+    {% endif %}
+</div>
+
+
+{% endblock %}

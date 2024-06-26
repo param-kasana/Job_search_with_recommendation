@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="job-detail-container">
+        <h2>{{ job.Title }}</h2>
+        <div class="job-info">
+            <div class="job-info-item">
+                <strong>Company:</strong>
+                <span>{{ job.Company }}</span>
+            </div>
+            <div class="job-info-item">
+                <strong>Description:</strong>
+                <p>{{ job.Description }}</p>
+            </div>
+            <div class="job-info-item">
+                <strong>Salary:</strong>
+                <span>{{ job.Salary }}</span>
+            </div>
+            <div class="job-info-item">
+                <strong>Job Post Date:</strong>
+                <span>{{ job.Post_Date }}</span>
+            </div>
+            <div class="job-info-item">
+                <strong>Category:</strong>
+                <span>{{ job.Category }}</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

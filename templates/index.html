@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 style="text-align: center; font-size: 24px; color: #dbdbdb; margin-bottom: 28px;">Your Journey to Success Starts Here</h2>
+    <form action="{{ url_for('search_jobs') }}" method="get" style="text-align: center;">
+        <div style="display: flex; justify-content: center;">
+            <input type="text" name="keyword" placeholder="Enter keyword..." style="width: 30%; max-width: 300px; height: 40px; margin-top: 0px; font-size: 16px; margin-right: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <select name="category" style="width: 20%; max-width: 200px; height: 40px; font-size: 16px; margin-right: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <option value="all categories" selected>All categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" style="width: 10%; max-width: 100px; height: 40px; font-size: 16px; background-color: #426388; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+        </div>
+    </form>
+    
+    <div class="container">
+        <div class="column">
+            <p style="font-size: 24px; text-decoration: underline; margin-left: 230px;">Highest Paying Jobs</p>
+            <ul>
+                {% for job in highest_paying %}
+                    <div class="job-card" style="margin-bottom: 20px;">
+                        <a href="{{ url_for('job_detail', job_id=job.Webindex) }}" class="job-card-link">
+                            <h3 class="job-title">{{ job.Title }}</h3>
+                            <p class="job-description">{{ job.Description[:150] }}...</p>
+                            <p class="job-salary">Salary: {{ job.Salary }}</p>
+                            <p class="job-post-date">Job Post Date: {{ job.Post_Date }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="column">
+            <p style="font-size: 24px; text-decoration: underline; margin-left: 230px;">Recent Job Postings</p>
+            <ul>
+                {% for job in recent %}
+                    <div class="job-card" style="margin-bottom: 20px;">
+                        <a href="{{ url_for('job_detail', job_id=job.Webindex) }}" class="job-card-link">
+                            <h3 class="job-title">{{ job.Title }}</h3>
+                            <p class="job-description">{{ job.Description[:150] }}...</p>
+                            <p class="job-salary">Salary: {{ job.Salary }}</p>
+                            <p class="job-post-date">Job Post Date: {{ job.Post_Date }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
